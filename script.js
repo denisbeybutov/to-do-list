@@ -1,4 +1,15 @@
+// запоминаем значение заметки перед ее рдактированием
 let valueOfNote;
+
+// функция разрешить редактировать другие заметки
+function allowEditingOfNotes (userItem) {
+
+    const currentList = userItem.parentElement.parentElement;
+        
+    document.querySelectorAll('.list__item').forEach(function(list){
+        if(list !== currentList) list.querySelector('.list__wrapper-change ').classList.remove('hidden');
+    })
+}
 
 // зачеркивает текст когда чекбокс активен
 document.querySelectorAll('.list__checkbox').forEach(check => {
@@ -75,12 +86,13 @@ document.querySelectorAll('.reset').forEach(function(res){
     })
 })
 
-// функция разрешить редактировать другие заметки
-function allowEditingOfNotes (userItem) {
+// добавить заметку
 
-    const currentList = userItem.parentElement.parentElement;
-        
-    document.querySelectorAll('.list__item').forEach(function(list){
-        if(list !== currentList) list.querySelector('.list__wrapper-change ').classList.remove('hidden');
-    })
-}
+document.querySelector('.footer__button').addEventListener('click', function(){
+    console.log('modal windows')
+    document.querySelector('.wrapper-modal').classList.remove('hidden')
+})
+
+document.querySelector('.modal__button-cancel').addEventListener('click', function(){
+    document.querySelector('.wrapper-modal').classList.add('hidden')
+})
