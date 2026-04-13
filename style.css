@@ -220,6 +220,24 @@ body {
     scale: 1.2;
 }
 
+.empty {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.empty__img {
+    width: 220px;
+}
+
+.empty__text {
+    font-family: "Kanit Regular";
+    font-size: 20px;
+}
+
+
 .footer {
     
     width: 750px;
