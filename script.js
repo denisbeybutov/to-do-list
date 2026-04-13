@@ -89,10 +89,47 @@ document.querySelectorAll('.reset').forEach(function(res){
 // добавить заметку
 
 document.querySelector('.footer__button').addEventListener('click', function(){
-    console.log('modal windows')
     document.querySelector('.wrapper-modal').classList.remove('hidden')
 })
 
-document.querySelector('.modal__button-cancel').addEventListener('click', function(){
+// выйти из модального окна
+function exitFromModalWindow() {
+    document.querySelector('.modal__button-cancel').addEventListener('click', function(){
+        document.querySelector('.wrapper-modal').classList.add('hidden')
+    })
+}
+
+exitFromModalWindow();
+
+// значение из модального окна в новую заметку
+let newNote;
+document.querySelector('.modal__button-apply').addEventListener('click', function(){
+    console.log('click', document.querySelector('.modal__header-input').value);
+    newNote = document.querySelector('.modal__header-input').value;
+    
+    // exitFromModalWindow();
+    const newLiElement = document.createElement('li')
+    newLiElement.setAttribute('class', 'list__item')
+    newLiElement.innerHTML = 
+    `
+                    <div class="list__wrapper-note">
+                        
+                        <input class="list__checkbox" type="checkbox" id="checkbox1">
+                        
+                        <input class="list__input-text" type="text" value="${newNote}" disabled>
+                    </div>
+                    <div class="list__wrapper-change">
+                        <img class="list__icon edit" src="./icons/change.svg" alt="" width="13px">
+                        <img class="list__icon delete" src="./icons/trash.svg" alt="" width="18px">
+                    </div>
+                    <div class="list__wrapper-edit hidden">
+                        <img class="list__icon end-edit" src="./icons/check2.svg" width="17px" alt="">
+                        <img class="list__icon reset" src="./icons/close.svg" width="17px" alt="">
+                    </div>
+                `;
+    document.querySelector('.list__item').insertAdjacentElement("beforebegin", newLiElement)
+    
+    
     document.querySelector('.wrapper-modal').classList.add('hidden')
+    
 })

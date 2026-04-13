@@ -341,8 +341,8 @@ body {
     transition: scale .3s;
 }
 
-.modal__button-cancel:hover {
-    scale: 1.1;
+.modal__button-cancel:hover {        
+    background-color: var(--text-color);
 }
 
 
@@ -356,6 +356,11 @@ body {
     font-size: 18px;
     text-transform: uppercase;
 
+}
+.modal__button-apply:hover {
+    background-color: var(--color-accent-dark);
+    border: 2px solid var(--color-accent);
+    cursor: pointer;
 }
 
 .hidden {
