@@ -7,9 +7,50 @@
     <title>To do list</title>
 </head>
 <body>
-    
-    
-    <p>To do list</p>
+    <div class="wrapper">
+        <main class="main">
+            <h1 class="main__header">To do list</h1>
+            <div class="main__form">
+                <label for="main__search"></label>
+                <input class="main__input" type="search" id="main__search" placeholder="Search note...">
+                <img class="main__magnifier" src="./icons/magnifier.svg" alt="magnifier">
+                <button class="main__button-choose button">
+                    <p>All</p>
+                    <img class="button-choose__img" src="./icons/arrow-bottom.svg" alt="">
+                </button>
+                <button class="main__button-theme button">
+                    <img src="./icons/white-theme.svg" alt="white theme button">
+                </button>
+            </div>
+            <ul class="list">
+                <li class="list__item">
+                    <div class="list__wrapper-note">
+                        <input type="checkbox" id="checkbox1">
+                        <label class="list__label" for="checkbox1">Note #1</label>
+                    </div>
+                    <div class="list__wrapper-change">
+                        <img src="./icons/change.svg" alt="" width="13px">
+                        <img src="./icons/trash.svg" alt="" width="18px">
+                    </div>
+                </li>
+                <li class="list__item">
+                    <input type="checkbox" id="checkbox2">
+                    <label for="checkbox2">Note #2</label>
+                </li>
+                <li class="list__item">
+                    <input type="checkbox" id="checkbox3">
+                    <label for="checkbox3">Note #3</label>
+                </li>
+            </ul>
+            
+        </main>
+        <footer class="footer">
+            <button class="footer__button button">
+                <img src="./icons/footer-button.svg" alt="">
+            </button>
+        </footer>
+        
+    </div>
     
     <script src="./script.js"></script>
 </body>

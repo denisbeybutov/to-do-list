@@ -1,8 +1,183 @@
+@font-face {
+    font-family: "Kanit Medium";
+    src: url('./fonts/Kanit-Medium.woff2');
+    font-weight: 500;
+    font-style: medium;
+}
+@font-face {
+    font-family: "Kanit Regular";
+    src: url('./fonts/Kanit-Regular.woff2');
+    font-weight: 400;
+    font-style: regular;
+}
+@font-face {
+    font-family: "Inter medium";
+    src: url('./fonts/Inter-Medium.woff2');
+    font-weight: 500;
+    font-style: medium;
+}
+
 :root {
     --color-accent: #6C63FF;
+    --color-accent-rgb: rgb(108, 99, 255, .5);
+    --input-height: 38px;
+    --text-color: #f7f7f7;
+    --border-radius: 5px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+ul,li,ol {
+    list-style-type: none;
 }
 
 body {
     background-color: #252525;
-    color: #f7f7f7;
+    color: var(--text-color);
+    font-family: "Kanit Medium";
+}
+
+
+
+.wrapper {
+    padding: 10px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 750px;
+    margin: 0 auto;
+    gap: 18px;
+}
+
+.main__header {
+    font-size: 26px;
+    text-transform: uppercase;
+    line-height: 1.5;
+}
+
+.main__form {
+    display: flex;
+    position: relative;
+    gap: 16px;
+    width: 100%;
+}
+
+.main__input {
+    
+    width: 595px;
+    height: var(--input-height);
+    background-color: transparent;
+    border: 1px solid var(--text-color);
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+    padding-left: 16px;
+    padding-right: 45px;
+}
+.main__input::placeholder {
+    font-family: "Inter medium";
+    color: #666666;
+    
+}
+
+.main__magnifier {
+    position: absolute;
+    top: 8px;
+    right: 167px;
+    height: 21px;
+}
+
+.main__input:focus{
+    outline-color: #666666;
+    
+}
+
+.button {
+    background-color: var(--color-accent);
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+}
+
+.main__button-choose {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    width: 85px;
+    height: var(--input-height);
+    font-family: "Kanit Medium";
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+.button-choose__img {
+    width: 6px;
+    
+}
+
+.main__button-theme {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: var(--input-height);
+}
+
+.list {
+    width: 520px;
+}
+
+.list__item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-accent-rgb);
+}
+
+.list__wrapper-note {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.list__label {
+    font-size: 20px;
+}
+
+.list__wrapper-change {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer {
+    width: 750px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: end;
+}
+
+.footer__button {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 5px 0px var(--color-accent);
+}
+
+/*убрать синий крестик при вводе в поле ввода*/
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
 }
