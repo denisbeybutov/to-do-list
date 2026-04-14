@@ -238,14 +238,16 @@ function showAllNotes(){
 
 // поиск 
 function search(){
-    document.querySelector('.main__input').addEventListener('change', function(){
-        const searchString = this.value.toLowerCase().trim();
+    document.querySelector('.main__input').addEventListener('input', function(event){
+        showAllNotes();
+        const searchString = event.target.value.toLowerCase();
         list.querySelectorAll('.list__input-text').forEach(function(text){
+            console.log(text.value.toLowerCase())
             if(!text.value.toLowerCase().includes(searchString)) {
                 text.parentElement.parentElement.classList.add('hidden')
             }
         })
-        this.blur();
+
     })
 }
 
@@ -258,3 +260,9 @@ search(); //поиск
 
 
 
+//осталось сделать
+// удаление - возврат 5 секунд
+// пустую картинку если при поиске нет ничего
+// крестик в строке поиска чтобы удалить ввод
+// пустую картинку если выбираешь сделанные и не сдалнные задачи а там ничего не нашлось
+//
