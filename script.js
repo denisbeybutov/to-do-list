@@ -1,5 +1,11 @@
+//-------определение функций и переменных--------------
+
 // запоминаем значение заметки перед ее рдактированием
 let valueOfNote;
+// значение из модального окна в новую заметку
+let newNote;
+// переменная для тэга списка задач
+const list = document.querySelector('.list');
 
 // функция разрешить редактировать другие заметки
 function allowEditingOfNotes (userItem) {
@@ -11,86 +17,122 @@ function allowEditingOfNotes (userItem) {
     })
 }
 
-// зачеркивает текст когда чекбокс активен
-document.querySelectorAll('.list__checkbox').forEach(check => {
-    check.addEventListener('change', function(){
-        check.nextElementSibling.classList.toggle('line-through')
-    })
-})
-
-// удаление заметок по кнопке корзины
-document.querySelectorAll('.delete').forEach(function(trash) {
-    trash.addEventListener('click', function(){
-        const currentTrash = trash.parentElement.parentElement;
-        currentTrash.remove();
-        console.log( )
-        const countOfNotes = document.querySelectorAll('.list__item').length;
-        if (countOfNotes === 0) {
-            document.querySelector('.empty').classList.remove('hidden');
+// функция зачеркивает текст когда чекбокс активен
+// function crossOutText(){
+//     document.querySelectorAll('.list__checkbox').forEach(function(check){
+//         check.addEventListener('change', function(){
+//             console.log(check)
+//             check.nextElementSibling.classList.toggle('line-through')
+//         })
+//     })
+// }
+function crossOutText(){
+    list.addEventListener('change', function(event){
+        const currentCheckElemenet = event.target;
+        if(currentCheckElemenet.classList.contains('list__checkbox')) {
+            currentCheckElemenet.nextElementSibling.classList.toggle('line-through')
         }
 
     })
-})
+}
+
+// удаление заметок по кнопке корзины
+function deleteNote(){
+    list.addEventListener('click', function(event){
+        const currentClick = event.target;
+        const currentItemOfList = currentClick.parentElement.parentElement;
+        if(currentClick.classList.contains('delete')) {
+            currentItemOfList.remove();
+        }
+
+        const countOfNotes = document.querySelectorAll('.list__item').length;
+            if (countOfNotes === 0) {
+                document.querySelector('.empty').classList.remove('hidden');
+            }
+    })
+}
 
 // начать редактирование заметки
-document.querySelectorAll('.edit').forEach(function(ed) {
-    ed.addEventListener('click', function(){
-        
-        const input = ed.parentElement.parentElement.querySelector('.list__input-text')
-        const length = input.value.length;
-        valueOfNote = input.value;
-        
-        input.removeAttribute('disabled')
-        input.focus();
-        input.setSelectionRange(length, length)
+function editNote(){
+    list.addEventListener('click', function(event){
+        const currentEdit = event.target;
+        if(currentEdit.classList.contains('edit')) {
+            const currentInput = currentEdit.parentElement.previousElementSibling.querySelector('.list__input-text');
+            const lengthInput = currentInput.value.length;
+            
+            valueOfNote = currentInput.value;
 
-        ed.parentElement.classList.add('hidden')
-        ed.parentElement.nextElementSibling.classList.remove('hidden')
-        
-        // запретить редактировать другие заметки пока не отредактировали выбранную
-        const currentList = ed.parentElement.parentElement;
-        document.querySelectorAll('.list__item').forEach(function(list){
-            if (list !== currentList) {
-                list.querySelector('.list__wrapper-change ').classList.add('hidden')
-            }
-        })
+            currentInput.removeAttribute('disabled');
+            currentInput.focus();
+            currentInput.setSelectionRange(lengthInput, lengthInput);
+
+            currentEdit.parentElement.classList.add('hidden');
+            currentEdit.parentElement.nextElementSibling.classList.remove('hidden')
+
+            // запретить редактировать другие заметки пока не отредактировали выбранную
+            const currentList = currentEdit.parentElement.parentElement;
+            document.querySelectorAll('.list__item').forEach(function(list){
+                if (list !== currentList) {
+                    list.querySelector('.list__wrapper-change ').classList.add('hidden')
+                }
+            })
+
+
+        }
     })
-})
+}
 
 // закончить редактирование и сохранить изменения
-document.querySelectorAll('.end-edit').forEach(function(item){
-    item.addEventListener('click', function(){
+function saveChangesInNote() {
+    list.addEventListener('click', function(event){
+        const currentOk = event.target;
         
-        item.parentElement.previousElementSibling.classList.remove('hidden')
-        item.parentElement.classList.add('hidden')
-        
-        item.parentElement.parentElement.querySelector('.list__input-text').setAttribute('disabled','')
+        if(currentOk.classList.contains('end-edit')) {
+            currentOk.parentElement.previousElementSibling.classList.remove('hidden');
+            currentOk.parentElement.classList.add('hidden');
+            currentOk.parentElement.parentElement.querySelector('.list__input-text').setAttribute('disabled','')
 
-        // разрешить редактировать другие заметки
-        allowEditingOfNotes(item);
+            // разрешить редактировать другие заметки
+            allowEditingOfNotes(currentOk);
+        }
+        
     })
-})
+}
 
 // отклонить редактирование и сбросить редактирование
+function resetChangesInNote() {
+    list.addEventListener('click', function(event){
+        const currentReset = event.target;
+        if (currentReset.classList.contains('reset')) {
+            currentReset.parentElement.parentElement.querySelector('.list__input-text').value = valueOfNote;
+            currentReset.parentElement.parentElement.querySelector('.list__input-text').setAttribute('disabled', '');
+            currentReset.parentElement.classList.add('hidden');
+            currentReset.parentElement.previousElementSibling.classList.remove('hidden');
 
-document.querySelectorAll('.reset').forEach(function(res){
-    res.addEventListener('click', function(){
-        
-        res.parentElement.parentElement.querySelector('.list__input-text').value = valueOfNote;
-        res.parentElement.parentElement.querySelector('.list__input-text').setAttribute('disabled', '');
-        res.parentElement.classList.add('hidden');
-        res.parentElement.previousElementSibling.classList.remove('hidden');
-        // разрешить редактировать другие заметки
-        allowEditingOfNotes(res);
+            // разрешить редактировать другие заметки
+            allowEditingOfNotes(currentReset);
 
+        }
     })
-})
+}
 
-// добавить заметку
+// все изменения заметок кроме добавления
+function allChangesWithNotes(){
+    crossOutText(); //зачеркнуть
+    deleteNote(); // удалить заметку
+    editNote(); // начало редактировая заметки
+    saveChangesInNote(); // сохранить изменения в заметке
+    resetChangesInNote(); //сбросить изменения в заметке
+}
 
-document.querySelector('.footer__button').addEventListener('click', function(){
-    document.querySelector('.wrapper-modal').classList.remove('hidden')
-})
+// добавить заметку открыть модальное окно
+function openWindowForInputNewNote(){
+    document.querySelector('.footer__button').addEventListener('click', function(){
+        document.querySelector('.wrapper-modal').classList.remove('hidden')
+    })
+    exitFromModalWindow(); // выйти из модального окна
+    createNewNoteFromInput(); // создаем новую заметку из воода пользователя 
+}
 
 // выйти из модального окна
 function exitFromModalWindow() {
@@ -99,37 +141,105 @@ function exitFromModalWindow() {
     })
 }
 
-exitFromModalWindow();
+// создаем новую заметку из ввода пользователя
+function createNewNoteFromInput() {
+    document.querySelector('.modal__button-apply').addEventListener('click', function(){
+        
+        newNote = document.querySelector('.modal__header-input').value;
+        
+        // exitFromModalWindow();
+        const newLiElement = document.createElement('li')
+        newLiElement.setAttribute('class', 'list__item')
+        newLiElement.innerHTML = 
+        `
+                        <div class="list__wrapper-note">
+                            
+                            <input class="list__checkbox" type="checkbox" id="checkbox1">
+                            
+                            <input class="list__input-text" type="text" value="${newNote}" disabled>
+                        </div>
+                        <div class="list__wrapper-change">
+                            <img class="list__icon edit" src="./icons/change.svg" alt="" width="13px">
+                            <img class="list__icon delete" src="./icons/trash.svg" alt="" width="18px">
+                        </div>
+                        <div class="list__wrapper-edit hidden">
+                            <img class="list__icon end-edit" src="./icons/check2.svg" width="17px" alt="">
+                            <img class="list__icon reset" src="./icons/close.svg" width="17px" alt="">
+                        </div>
+                    `;
 
-// значение из модального окна в новую заметку
-let newNote;
-document.querySelector('.modal__button-apply').addEventListener('click', function(){
-    console.log('click', document.querySelector('.modal__header-input').value);
-    newNote = document.querySelector('.modal__header-input').value;
+        const currentItem = document.querySelector('.list__item')
+        if(!currentItem) {
+            document.querySelector('.empty').classList.add('hidden')
+        }
+        const list = document.querySelector('.list');
+        list.insertAdjacentElement("afterbegin", newLiElement)
+
+        
+
+        document.querySelector('.wrapper-modal').classList.add('hidden')
+        //слушаем все изменения в добавленных заметках
+        // allChangesWithNotes();
+    })
+}
+
+// открыть меню выбора заметок
+function openMenu (){
+    const btnChoose = document.querySelector('.main__button-choose');
+    btnChoose.addEventListener('click', function(){
+        this.querySelector('.button-choose__list').classList.toggle('hidden');
+        this.querySelector('.top').classList.toggle('hidden');
+        this.querySelector('.bottom').classList.toggle('hidden');
+    })
+
+    //показать несделанные задачи
+    showIncompleteNotes();
+
+    // показать сделанные задачи
+    showCompleteNotes();
+
+    // показать все задачи
+    showAll();
+
+}
+
+// показать сделанные задачи
+function showCompleteNotes(){
     
-    // exitFromModalWindow();
-    const newLiElement = document.createElement('li')
-    newLiElement.setAttribute('class', 'list__item')
-    newLiElement.innerHTML = 
-    `
-                    <div class="list__wrapper-note">
-                        
-                        <input class="list__checkbox" type="checkbox" id="checkbox1">
-                        
-                        <input class="list__input-text" type="text" value="${newNote}" disabled>
-                    </div>
-                    <div class="list__wrapper-change">
-                        <img class="list__icon edit" src="./icons/change.svg" alt="" width="13px">
-                        <img class="list__icon delete" src="./icons/trash.svg" alt="" width="18px">
-                    </div>
-                    <div class="list__wrapper-edit hidden">
-                        <img class="list__icon end-edit" src="./icons/check2.svg" width="17px" alt="">
-                        <img class="list__icon reset" src="./icons/close.svg" width="17px" alt="">
-                    </div>
-                `;
-    document.querySelector('.list__item').insertAdjacentElement("beforebegin", newLiElement)
+    document.querySelector('.complete').addEventListener('click', function(){
+        showAllNotes();
+        list.querySelectorAll('.list__checkbox').forEach(function(item){
+            if(item.checked === false) item.parentElement.parentElement.classList.add('hidden');
+        })
+    });
+}
+// показать несделанные задачи
+function showIncompleteNotes(){
     
-    
-    document.querySelector('.wrapper-modal').classList.add('hidden')
-    
-})
+    document.querySelector('.incomplete').addEventListener('click', function(){
+        showAllNotes();
+        list.querySelectorAll('.line-through').forEach(function(item){
+            item.parentElement.parentElement.classList.add('hidden')
+        })
+    })
+}
+
+// показать все задачи при нажатии на кноку all в списке
+function showAll(){
+    document.querySelector('.all').addEventListener('click', showAllNotes)
+}
+
+// показать все задачи, вспомогательная функция
+function showAllNotes(){
+    list.querySelectorAll('.list__item').forEach(function(item){
+        item.classList.remove('hidden');
+    })
+}
+
+//----------начало программы---------
+
+allChangesWithNotes(); //удаление редактирование зачеркивание заметок
+openWindowForInputNewNote(); //окрыть модальное окно для ввода новой заметки
+openMenu(); //открыть меню выбора заметок
+
+
