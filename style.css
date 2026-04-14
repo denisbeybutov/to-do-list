@@ -48,6 +48,9 @@ body {
 
 
 .wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
     padding: 10px;
 }
 
@@ -59,6 +62,7 @@ body {
     width: 750px;
     margin: 0 auto;
     gap: 18px;
+
 }
 
 .main__header {
@@ -179,8 +183,11 @@ body {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid var(--color-accent-rgb);
     padding: 15px 0;
+}
+
+.list__item:not(:last-child) {
+    border-bottom: 1px solid var(--color-accent-rgb);
 }
 
 .list__item:hover {
@@ -278,11 +285,40 @@ body {
 
 
 .footer {
-    
+    flex-grow: 1;
+    position: relative;
     width: 750px;
     margin: 0 auto;
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer__button-undo {
     display: flex;
     justify-content: end;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 10px;
+    left: 30px;
+    width: 123px;
+    height: 38px;
+    font-family: "Kanit Regular";
+    text-transform: uppercase;
+    font-size: 16px;
+    background-color: var(--color-accent-dark);
+    border: 2px solid var(--color-accent);
+    
+}
+.footer__button-undo:hover {
+    background-color: var(--color-accent);
+    cursor: pointer;
+}
+
+.footer__button-undo-img {
+    width: 15px;
 }
 
 .footer__button {
@@ -294,7 +330,9 @@ body {
     justify-content: center;
     box-shadow: 0px 0px 5px 0px var(--color-accent);
     position: absolute;
-    bottom: 32px;
+    bottom: 10px;
+    right: 10px;
+    
     
 }
 .footer__button:hover {

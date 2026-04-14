@@ -18,14 +18,6 @@ function allowEditingOfNotes (userItem) {
 }
 
 // функция зачеркивает текст когда чекбокс активен
-// function crossOutText(){
-//     document.querySelectorAll('.list__checkbox').forEach(function(check){
-//         check.addEventListener('change', function(){
-//             console.log(check)
-//             check.nextElementSibling.classList.toggle('line-through')
-//         })
-//     })
-// }
 function crossOutText(){
     list.addEventListener('change', function(event){
         const currentCheckElemenet = event.target;
@@ -42,13 +34,22 @@ function deleteNote(){
         const currentClick = event.target;
         const currentItemOfList = currentClick.parentElement.parentElement;
         if(currentClick.classList.contains('delete')) {
-            currentItemOfList.remove();
+            currentItemOfList.classList.add('hidden');
+            document.querySelector('.footer__button-undo').classList.remove('hidden')
+            document.querySelector('.footer__button-undo').addEventListener('click', function(){
+                currentItemOfList.classList.remove('hidden');
+                document.querySelector('.footer__button-undo').classList.add('hidden')
+            })
+            // currentItemOfList.remove();
         }
+
+        
 
         const countOfNotes = document.querySelectorAll('.list__item').length;
             if (countOfNotes === 0) {
                 document.querySelector('.empty').classList.remove('hidden');
             }
+        
     })
 }
 
@@ -129,7 +130,9 @@ function allChangesWithNotes(){
 function openWindowForInputNewNote(){
     document.querySelector('.footer__button').addEventListener('click', function(){
         document.querySelector('.wrapper-modal').classList.remove('hidden')
+        document.querySelector('.modal__header-input').value = '';
     })
+    
     exitFromModalWindow(); // выйти из модального окна
     createNewNoteFromInput(); // создаем новую заметку из воода пользователя 
 }
@@ -265,4 +268,4 @@ search(); //поиск
 // пустую картинку если при поиске нет ничего
 // крестик в строке поиска чтобы удалить ввод
 // пустую картинку если выбираешь сделанные и не сдалнные задачи а там ничего не нашлось
-//
+// поиск сбрасывает фильтр по седеланным и не сделанным - надо запоминать состояние всех элеметов перед вводом и искать только среди тех что показываются 
