@@ -236,10 +236,25 @@ function showAllNotes(){
     })
 }
 
+// поиск 
+function search(){
+    document.querySelector('.main__input').addEventListener('change', function(){
+        const searchString = this.value.toLowerCase().trim();
+        list.querySelectorAll('.list__input-text').forEach(function(text){
+            if(!text.value.toLowerCase().includes(searchString)) {
+                text.parentElement.parentElement.classList.add('hidden')
+            }
+        })
+        this.blur();
+    })
+}
+
 //----------начало программы---------
 
 allChangesWithNotes(); //удаление редактирование зачеркивание заметок
 openWindowForInputNewNote(); //окрыть модальное окно для ввода новой заметки
 openMenu(); //открыть меню выбора заметок
+search(); //поиск
+
 
 
