@@ -6,6 +6,8 @@ let valueOfNote;
 let newNote;
 // переменная для тэга списка задач
 const list = document.querySelector('.list');
+// массив задач
+let arrOfNotes = [];
 
 // функция разрешить редактировать другие заметки
 function allowEditingOfNotes (userItem) {
@@ -288,17 +290,77 @@ function search(){
     })
 }
 
+
+function saveNotesInLocalStorage() {
+
+    arrOfNotes = JSON.parse(localStorage.getItem('arrOfNotes'))
+    
+    if(arrOfNotes === null) saveArrOfNotes(); 
+    console.log(arrOfNotes)
+    // console.log(arrOfNotes)
+    const inputText = document.querySelectorAll('.list__input-text');
+    // console.log(inputText.length)
+    // console.log(arrOfNotes.length - inputText.length)
+    for(let i = 0;i<(arrOfNotes.length - inputText.length);i++) {
+       // console.log(document.querySelector('.list').innerHTML)
+       document.querySelector('.list').innerHTML += `
+                           <li class="list__item">
+                       <div class="list__wrapper-note">
+                           
+                           <input class="list__checkbox" type="checkbox" id="checkbox1">
+                           
+                           <input class="list__input-text" type="text" value="new obj" disabled>
+                       </div>
+                       <div class="list__wrapper-change">
+                           <img class="list__icon edit" src="./icons/change.svg" alt="" width="13px">
+                           <img class="list__icon delete" src="./icons/trash.svg" alt="" width="18px">
+                       </div>
+                       <div class="list__wrapper-edit hidden">
+                           <img class="list__icon end-edit" src="./icons/check2.svg" width="17px" alt="">
+                           <img class="list__icon reset" src="./icons/close.svg" width="17px" alt="">
+                       </div>
+                   </li>
+                       `
+    }
+    document.querySelectorAll('.list__input-text').forEach(function(text,index){
+       text.value = arrOfNotes[index].text
+    })
+    
+    
+    //сохранить данные по кнопке save в локальном хранилище
+    function saveArrOfNotes(){
+       arrOfNotes = [];
+       document.querySelectorAll('.list__input-text').forEach(function(textOfNote){
+           arrOfNotes.push({
+               text: textOfNote.value,
+               checked: textOfNote.previousElementSibling.checked
+           });
+       })    
+       console.log(arrOfNotes)
+       localStorage.setItem('arrOfNotes', JSON.stringify(arrOfNotes))
+       
+       
+    }
+    
+    document.querySelector('.save').addEventListener('click', saveArrOfNotes)
+    }
+    
 //----------начало программы---------
 
 allChangesWithNotes(); //удаление редактирование зачеркивание заметок
 openWindowForInputNewNote(); //окрыть модальное окно для ввода новой заметки
 openMenu(); //открыть меню выбора заметок
 search(); //поиск
+saveNotesInLocalStorage(); //сохранение данных в локальном хранилище
+
+
 
 
 
 // недоделки
+
 // пустую картинку если при поиске нет ничего
 // крестик в строке поиска чтобы удалить ввод
 // пустую картинку если выбираешь сделанные и не сдалнные задачи а там ничего не нашлось
 // поиск сбрасывает фильтр по седеланным и не сделанным - надо запоминать состояние всех элеметов перед вводом и искать только среди тех что показываются 
+// когда остается меньше трех задач то выскакивает ошибка - надо вручную удалять local storage

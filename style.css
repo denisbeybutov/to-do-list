@@ -467,3 +467,19 @@ input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
+
+.save {
+    
+    width: 100px;
+    height: 38px;
+    text-transform: uppercase;
+    font-family: "Kanit Medium";
+    font-size: 18px;
+    border: 2px solid var(--color-accent);
+}
+
+.save:hover {
+    background-color: var(--color-accent-dark);
+    border: 2px solid var(--color-accent);
+    cursor: pointer;
+}
