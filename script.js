@@ -33,11 +33,12 @@ function deleteNote(){
     list.addEventListener('click', function(event){
         const currentClick = event.target;
         const currentItemOfList = currentClick.parentElement.parentElement;
+        const undo = document.querySelector('.footer__button-undo');
 
         // нажали на кнопку корзины
         if(currentClick.classList.contains('delete')) {
             currentItemOfList.classList.add('hidden');
-            const undo = document.querySelector('.footer__button-undo');
+            
             undo.classList.remove('hidden')
 
             let setTimeoutId = setTimeout(()=>{
@@ -54,6 +55,8 @@ function deleteNote(){
 
         //таймер для отображения на кнопке undo
         const undoCount = document.querySelector('.footer__button-undo-count');
+        const undoProgress = document.querySelector('.footer__button-undo-progress');
+        undoProgress.setAttribute('style',`width:100%`);
         undoCount.innerHTML = `5`
         let sec = 5;
         let count = setInterval(()=>{
@@ -61,6 +64,7 @@ function deleteNote(){
             if(sec === 0) clearInterval(count)
             else {
                    undoCount.innerHTML = `${sec}`
+                   undoProgress.setAttribute('style',`width:${sec*20}%`);
             }            
         },1000)        
 
@@ -283,8 +287,7 @@ search(); //поиск
 
 
 
-//осталось сделать
-// удаление - возврат 5 секунд
+// недоделки
 // пустую картинку если при поиске нет ничего
 // крестик в строке поиска чтобы удалить ввод
 // пустую картинку если выбираешь сделанные и не сдалнные задачи а там ничего не нашлось

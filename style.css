@@ -326,6 +326,15 @@ body {
     width: 15px;
 }
 
+.footer__button-undo-progress {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    
+    height: 3px;
+    background-color: var(--text-color);
+}
+
 .footer__button {
     border-radius: 50%;
     width: 50px;
