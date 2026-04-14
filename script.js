@@ -33,18 +33,38 @@ function deleteNote(){
     list.addEventListener('click', function(event){
         const currentClick = event.target;
         const currentItemOfList = currentClick.parentElement.parentElement;
+
+        // нажали на кнопку корзины
         if(currentClick.classList.contains('delete')) {
             currentItemOfList.classList.add('hidden');
-            document.querySelector('.footer__button-undo').classList.remove('hidden')
-            document.querySelector('.footer__button-undo').addEventListener('click', function(){
+            const undo = document.querySelector('.footer__button-undo');
+            undo.classList.remove('hidden')
+
+            let setTimeoutId = setTimeout(()=>{
+                undo.classList.add('hidden');
+                currentItemOfList.remove();
+            }, 5000)
+           
+            undo.addEventListener('click', function(){
                 currentItemOfList.classList.remove('hidden');
-                document.querySelector('.footer__button-undo').classList.add('hidden')
+                undo.classList.add('hidden')
+                clearTimeout(setTimeoutId);
             })
-            // currentItemOfList.remove();
         }
 
-        
+        //таймер для отображения на кнопке undo
+        const undoCount = document.querySelector('.footer__button-undo-count');
+        undoCount.innerHTML = `5`
+        let sec = 5;
+        let count = setInterval(()=>{
+            sec--;
+            if(sec === 0) clearInterval(count)
+            else {
+                   undoCount.innerHTML = `${sec}`
+            }            
+        },1000)        
 
+        // показываем картинку пустую
         const countOfNotes = document.querySelectorAll('.list__item').length;
             if (countOfNotes === 0) {
                 document.querySelector('.empty').classList.remove('hidden');

@@ -296,7 +296,7 @@ body {
 
 .footer__button-undo {
     display: flex;
-    justify-content: end;
+    /* justify-content: space-between; */
     gap: 10px;
     align-items: center;
     padding: 10px;
@@ -316,6 +316,11 @@ body {
     background-color: var(--color-accent);
     cursor: pointer;
 }
+
+.footer__button-undo-count{
+    width: 20px;
+}
+
 
 .footer__button-undo-img {
     width: 15px;
