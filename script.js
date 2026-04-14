@@ -31,44 +31,54 @@ function crossOutText(){
 // удаление заметок по кнопке корзины
 function deleteNote(){
     list.addEventListener('click', function(event){
+        //элемент на котором произошел клик
         const currentClick = event.target;
+        //текущая задача
         const currentItemOfList = currentClick.parentElement.parentElement;
-        const undo = document.querySelector('.footer__button-undo');
+        
 
         // нажали на кнопку корзины
         if(currentClick.classList.contains('delete')) {
-            currentItemOfList.classList.add('hidden');
-            
-            undo.classList.remove('hidden')
 
+            //таймер для отображения на кнопке undo
+            const undoCount = document.querySelector('.footer__button-undo-count');
+            const undoProgress = document.querySelector('.footer__button-undo-progress');
+            undoProgress.setAttribute('style',`width:100%`);
+            undoCount.innerHTML = `5`
+            let sec = 5;
+            let count = setInterval(()=>{
+                sec--;
+                if(sec === 0) clearInterval(count)
+                else {
+                    undoCount.innerHTML = `${sec}`
+                    undoProgress.setAttribute('style',`width:${sec*20}%`);
+                    
+                }            
+            },1000)      
+
+            // скрываем текущую задачу на 5 секунд
+            currentItemOfList.classList.add('hidden');
+            //показываем кнопку undo
+            const undo = document.querySelector('.footer__button-undo');
+            undo.classList.remove('hidden')
+            //через 5 секунд скрвыаем undo и удаляем задачу
             let setTimeoutId = setTimeout(()=>{
                 undo.classList.add('hidden');
                 currentItemOfList.remove();
             }, 5000)
-           
+            
+            //при нажатии на undo открываем задачу, скрываем кнопку и сбрасываем функции интервалов
             undo.addEventListener('click', function(){
                 currentItemOfList.classList.remove('hidden');
                 undo.classList.add('hidden')
                 clearTimeout(setTimeoutId);
+                clearInterval(count);
             })
         }
 
-        //таймер для отображения на кнопке undo
-        const undoCount = document.querySelector('.footer__button-undo-count');
-        const undoProgress = document.querySelector('.footer__button-undo-progress');
-        undoProgress.setAttribute('style',`width:100%`);
-        undoCount.innerHTML = `5`
-        let sec = 5;
-        let count = setInterval(()=>{
-            sec--;
-            if(sec === 0) clearInterval(count)
-            else {
-                   undoCount.innerHTML = `${sec}`
-                   undoProgress.setAttribute('style',`width:${sec*20}%`);
-            }            
-        },1000)        
+          
 
-        // показываем картинку пустую
+        // показываем картинку пустую - не работает потому что уадление через 5 секунд, а до этого задача просто скрыта
         const countOfNotes = document.querySelectorAll('.list__item').length;
             if (countOfNotes === 0) {
                 document.querySelector('.empty').classList.remove('hidden');
