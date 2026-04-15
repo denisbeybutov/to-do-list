@@ -167,6 +167,7 @@ function openWindowForInputNewNote(){
     document.querySelector('.footer__button').addEventListener('click', function(){
         document.querySelector('.wrapper-modal').classList.remove('hidden')
         document.querySelector('.modal__header-input').value = '';
+        document.querySelector('.modal__header-input').focus();
     })
     
     exitFromModalWindow(); // выйти из модального окна
@@ -295,14 +296,10 @@ function saveNotesInLocalStorage() {
 
     arrOfNotes = JSON.parse(localStorage.getItem('arrOfNotes'))
     
-    if(arrOfNotes === null) saveArrOfNotes(); 
-    // console.log(arrOfNotes)
-    // console.log(arrOfNotes)
+    if(arrOfNotes === null) saveArrOfNotes();     
     const inputText = document.querySelectorAll('.list__input-text');
-    // console.log(inputText.length)
-    // console.log(arrOfNotes.length - inputText.length)
     for(let i = 0;i<(arrOfNotes.length - inputText.length);i++) {
-       // console.log(document.querySelector('.list').innerHTML)
+       
        document.querySelector('.list').innerHTML += `
                            <li class="list__item">
                        <div class="list__wrapper-note">
@@ -322,8 +319,11 @@ function saveNotesInLocalStorage() {
                    </li>
                        `
     }
+    //вставляем значения из массива в разметку
     document.querySelectorAll('.list__input-text').forEach(function(text,index){
-       text.value = arrOfNotes[index].text
+       text.value = arrOfNotes[index].text;
+       text.previousElementSibling.checked = arrOfNotes[index].checked;
+       if(arrOfNotes[index].checked === true) text.classList.add('line-through');
     })
     
     
@@ -363,4 +363,3 @@ saveNotesInLocalStorage(); //сохранение данных в локальн
 // крестик в строке поиска чтобы удалить ввод
 // пустую картинку если выбираешь сделанные и не сдалнные задачи а там ничего не нашлось
 // поиск сбрасывает фильтр по седеланным и не сделанным - надо запоминать состояние всех элеметов перед вводом и искать только среди тех что показываются 
-// когда остается меньше трех задач то выскакивает ошибка - надо вручную удалять local storage

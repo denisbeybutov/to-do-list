@@ -153,7 +153,7 @@ body {
     width: 85px;
     border-radius: var(--border-radius);
     border: 1px solid var(--color-accent);
-    
+    z-index: 10;
 }
 
 .button-choose__item {
@@ -524,5 +524,12 @@ input[type="search"]::-webkit-search-results-decoration {
     .footer__button{
         left: 80vw;
         bottom: -10vh;
+        
+    }
+
+    .footer__button-undo {
+        bottom: -10vh;
+        right: 80vw;
+        
     }
 }
