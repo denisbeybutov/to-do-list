@@ -74,8 +74,13 @@ body {
 .main__form {
     display: flex;
     position: relative;
-    gap: 16px;
+    gap: 10px;
     width: 100%;
+}
+
+.main__wrapper{
+    display: flex;
+    gap: 10px;
 }
 
 .main__input {
@@ -98,7 +103,7 @@ body {
 .main__magnifier {
     position: absolute;
     top: 8px;
-    right: 245px;
+    right: 265px;
     height: 21px;
 }
 
@@ -482,4 +487,42 @@ input[type="search"]::-webkit-search-results-decoration {
     background-color: var(--color-accent-dark);
     border: 2px solid var(--color-accent);
     cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        height: 89vh;
+    }
+    
+    .main {
+        width: 500px;
+    }
+
+    .main__input {
+        width: 100%;
+    }
+
+    .main__magnifier{
+        right: 10px;
+        top: 18px;
+    }
+
+    .main__wrapper {
+        justify-content: center;
+    }
+
+    .list{
+        width: 100%;
+    }
+
+    
+    .main__form {
+        flex-direction: column;
+        
+    }
+
+    .footer__button{
+        left: 80vw;
+        bottom: -10vh;
+    }
 }

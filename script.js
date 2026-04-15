@@ -281,7 +281,7 @@ function search(){
         showAllNotes();
         const searchString = event.target.value.toLowerCase();
         list.querySelectorAll('.list__input-text').forEach(function(text){
-            console.log(text.value.toLowerCase())
+            
             if(!text.value.toLowerCase().includes(searchString)) {
                 text.parentElement.parentElement.classList.add('hidden')
             }
@@ -296,7 +296,7 @@ function saveNotesInLocalStorage() {
     arrOfNotes = JSON.parse(localStorage.getItem('arrOfNotes'))
     
     if(arrOfNotes === null) saveArrOfNotes(); 
-    console.log(arrOfNotes)
+    // console.log(arrOfNotes)
     // console.log(arrOfNotes)
     const inputText = document.querySelectorAll('.list__input-text');
     // console.log(inputText.length)
@@ -336,7 +336,7 @@ function saveNotesInLocalStorage() {
                checked: textOfNote.previousElementSibling.checked
            });
        })    
-       console.log(arrOfNotes)
+    //    console.log(arrOfNotes)
        localStorage.setItem('arrOfNotes', JSON.stringify(arrOfNotes))
        
        
