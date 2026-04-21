@@ -85,7 +85,7 @@ body {
 
 .main__input {
     
-    width: 595px;
+    width: 400px;
     height: var(--input-height);
     background-color: transparent;
     border: 1px solid var(--text-color);
@@ -103,7 +103,7 @@ body {
 .main__magnifier {
     position: absolute;
     top: 8px;
-    right: 265px;
+    right: 363px;
     height: 21px;
 }
 
@@ -475,7 +475,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
 .save {
     
-    width: 100px;
+    width: 70px;
     height: 38px;
     text-transform: uppercase;
     font-family: "Kanit Medium";
@@ -484,6 +484,21 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .save:hover {
+    background-color: var(--color-accent-dark);
+    border: 2px solid var(--color-accent);
+    cursor: pointer;
+}
+
+.delete-btn {
+    width: 120px;
+    text-transform: uppercase;
+    font-family: "Kanit Medium";
+    font-size: 18px;
+    border: 2px solid var(--color-accent);
+    
+}
+
+.delete-btn:hover {
     background-color: var(--color-accent-dark);
     border: 2px solid var(--color-accent);
     cursor: pointer;
@@ -548,6 +563,10 @@ input[type="search"]::-webkit-search-results-decoration {
     .main {
         width: 380px;
 
+        
+    }
+    .footer {
+        width: 380px;
     }
 
     .list__input-text {

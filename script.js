@@ -6,6 +6,8 @@ let valueOfNote;
 let newNote;
 // переменная для тэга списка задач
 const list = document.querySelector('.list');
+const deleteBtn = document.querySelector('.delete-btn');
+const undo = document.querySelector('.footer__button-undo');
 // массив задач
 let arrOfNotes = [];
 
@@ -25,9 +27,12 @@ function crossOutText(){
         const currentCheckElemenet = event.target;
         if(currentCheckElemenet.classList.contains('list__checkbox')) {
             currentCheckElemenet.nextElementSibling.classList.toggle('line-through')
+            saveArrOfNotes(); //сохраняем изменения
         }
 
     })
+    
+    
 }
 
 // удаление заметок по кнопке корзины
@@ -60,13 +65,14 @@ function deleteNote(){
 
             // скрываем текущую задачу на 5 секунд
             currentItemOfList.classList.add('hidden');
-            //показываем кнопку undo
-            const undo = document.querySelector('.footer__button-undo');
+            //показываем кнопку undo            
             undo.classList.remove('hidden')
             //через 5 секунд скрвыаем undo и удаляем задачу
             let setTimeoutId = setTimeout(()=>{
                 undo.classList.add('hidden');
                 currentItemOfList.remove();
+                console.log('save');
+                saveArrOfNotes(); //сохраняем изменения
             }, 5000)
             
             //при нажатии на undo открываем задачу, скрываем кнопку и сбрасываем функции интервалов
@@ -87,6 +93,7 @@ function deleteNote(){
             }
         
     })
+    
 }
 
 // начать редактирование заметки
@@ -124,13 +131,22 @@ function saveChangesInNote() {
     list.addEventListener('click', function(event){
         const currentOk = event.target;
         
+        
         if(currentOk.classList.contains('end-edit')) {
+            const input = currentOk.parentElement.previousElementSibling.previousElementSibling.lastElementChild;
+
             currentOk.parentElement.previousElementSibling.classList.remove('hidden');
             currentOk.parentElement.classList.add('hidden');
             currentOk.parentElement.parentElement.querySelector('.list__input-text').setAttribute('disabled','')
+            console.log(input.value);
+            input.setAttribute('value', input.value);
+            console.log(input.getAttribute('value'));
+            
 
+            
             // разрешить редактировать другие заметки
-            allowEditingOfNotes(currentOk);
+            allowEditingOfNotes(currentOk);            
+            saveArrOfNotes(); //сохраняем изменения
         }
         
     })
@@ -151,6 +167,7 @@ function resetChangesInNote() {
 
         }
     })
+    
 }
 
 // все изменения заметок кроме добавления
@@ -179,6 +196,7 @@ function exitFromModalWindow() {
     document.querySelector('.modal__button-cancel').addEventListener('click', function(){
         document.querySelector('.wrapper-modal').classList.add('hidden')
     })
+    
 }
 
 // создаем новую заметку из ввода пользователя
@@ -218,9 +236,12 @@ function createNewNoteFromInput() {
         
 
         document.querySelector('.wrapper-modal').classList.add('hidden')
-        //слушаем все изменения в добавленных заметках
-        // allChangesWithNotes();
+        
+        console.log('save');
+        saveArrOfNotes();
+        
     })
+    
 }
 
 // открыть меню выбора заметок
@@ -292,7 +313,7 @@ function search(){
 }
 
 
-function saveNotesInLocalStorage() {
+function init() {
 
     arrOfNotes = JSON.parse(localStorage.getItem('arrOfNotes'))
     
@@ -325,33 +346,94 @@ function saveNotesInLocalStorage() {
        text.previousElementSibling.checked = arrOfNotes[index].checked;
        if(arrOfNotes[index].checked === true) text.classList.add('line-through');
     })
+        
+}
+
+//сохранить данные в локальном хранилище
+function saveArrOfNotes(){
+    arrOfNotes = [];
+    document.querySelectorAll('.list__input-text').forEach(function(textOfNote){
+        arrOfNotes.push({
+            text: textOfNote.value,
+            checked: textOfNote.previousElementSibling.checked
+        });
+    })    
+ 
+    localStorage.setItem('arrOfNotes', JSON.stringify(arrOfNotes))
     
     
-    //сохранить данные по кнопке save в локальном хранилище
-    function saveArrOfNotes(){
-       arrOfNotes = [];
-       document.querySelectorAll('.list__input-text').forEach(function(textOfNote){
-           arrOfNotes.push({
-               text: textOfNote.value,
-               checked: textOfNote.previousElementSibling.checked
-           });
-       })    
-    //    console.log(arrOfNotes)
-       localStorage.setItem('arrOfNotes', JSON.stringify(arrOfNotes))
+ }
+    
+function deleteAllNotes(){
+    deleteBtn.addEventListener('click', function(){
+        const arr = [];
+        
+        list.querySelectorAll('.list__item').forEach((listItem,index) => {
+            // console.log(listItem)
+            arr[index] = listItem;
+            list.removeChild(listItem);
+            
+        })
+        showEmptyPicture();
+
+        //таймер для отображения на кнопке undo
+        const undoCount = document.querySelector('.footer__button-undo-count');
+        const undoProgress = document.querySelector('.footer__button-undo-progress');
+        undoProgress.setAttribute('style',`width:100%`);
+        undoCount.innerHTML = `5`
+        let sec = 5;
+        let count = setInterval(()=>{
+            sec--;
+            if(sec === 0) clearInterval(count)
+            else {
+                undoCount.innerHTML = `${sec}`
+                undoProgress.setAttribute('style',`width:${sec*20}%`);
+                
+            }            
+        },1000)      
+        //кнопка undo отобраажется
+        undo.classList.remove('hidden')
+
+        //через 5 секунд скрвыаем undo и сохраняем результат
+        let setTimeoutId = setTimeout(()=>{
+            undo.classList.add('hidden');
+            saveArrOfNotes();
+        }, 5000)
+        
+        //при нажатии на undo вощвращаем заметку
+        undo.addEventListener('click', function(){
+            list.innerHTML = Object.values(arr).reduce((acc, item) => 
+                                                            acc += item.outerHTML, '')
+            deleteEmptyPicture();
+            undo.classList.add('hidden')
+            clearTimeout(setTimeoutId);
+            clearInterval(count);
+        })
        
-       
-    }
-    
-    document.querySelector('.save').addEventListener('click', saveArrOfNotes)
-    }
-    
+        
+
+    })
+}
+
+function showEmptyPicture(){
+    const countOfNotes = document.querySelectorAll('.list__item').length;
+            if (countOfNotes === 0) {
+                document.querySelector('.empty').classList.remove('hidden');
+            }
+        
+}
+
+function deleteEmptyPicture(){
+    document.querySelector('.empty').classList.add('hidden');
+}
 //----------начало программы---------
 
+init(); //создание данных в лок хранилище - массива заметок
 allChangesWithNotes(); //удаление редактирование зачеркивание заметок
 openWindowForInputNewNote(); //окрыть модальное окно для ввода новой заметки
 openMenu(); //открыть меню выбора заметок
 search(); //поиск
-saveNotesInLocalStorage(); //сохранение данных в локальном хранилище
+deleteAllNotes(); //удалить все заметки
 
 
 
