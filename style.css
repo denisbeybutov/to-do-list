@@ -1,0 +1,584 @@
+@font-face {
+    font-family: "Kanit Medium";
+    src: url('./fonts/Kanit-Medium.woff2');
+    font-weight: 500;
+    font-style: medium;
+}
+@font-face {
+    font-family: "Kanit Regular";
+    src: url('./fonts/Kanit-Regular.woff2');
+    font-weight: 400;
+    font-style: regular;
+}
+@font-face {
+    font-family: "Inter medium";
+    src: url('./fonts/Inter-Medium.woff2');
+    font-weight: 500;
+    font-style: medium;
+}
+
+:root {
+    --color-accent: #6C63FF;
+    --color-accent-dark: #534CC2;
+    --color-accent-rgb: rgb(108, 99, 255, .5);
+    --input-height: 38px;
+    --text-color: #f7f7f7;
+    --border-radius: 5px;
+    --background-color: #252525;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+ul,li,ol {
+    list-style-type: none;
+}
+
+
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: "Kanit Medium";
+}
+
+
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 10px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 750px;
+    margin: 0 auto;
+    gap: 18px;
+
+}
+
+.main__header {
+    font-size: 26px;
+    text-transform: uppercase;
+    line-height: 1.5;
+}
+
+.main__form {
+    display: flex;
+    position: relative;
+    gap: 10px;
+    width: 100%;
+}
+
+.main__wrapper{
+    display: flex;
+    gap: 10px;
+}
+
+.main__input {
+    
+    width: 400px;
+    height: var(--input-height);
+    background-color: transparent;
+    border: 1px solid var(--text-color);
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+    padding-left: 16px;
+    padding-right: 45px;
+}
+.main__input::placeholder {
+    font-family: "Inter medium";
+    color: #666666;
+    
+}
+
+.main__magnifier {
+    position: absolute;
+    top: 8px;
+    right: 363px;
+    height: 21px;
+}
+
+.main__input:focus{
+    outline-color: #666666;
+    
+}
+
+.button {
+    background-color: var(--color-accent);
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+}
+
+.main__button-choose {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    width: 85px;
+    height: var(--input-height);
+    font-family: "Kanit Medium";
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+.main__button-choose:hover {
+    background-color: var(--color-accent-dark);
+    cursor: pointer;
+}
+
+.button-choose__list {
+    position: absolute;
+    top: 38px;
+    left: 0;
+    font-size: 14px;
+    font-family: "Kanit Regular";
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    background-color: var(--text-color);
+    color: var(--color-accent);
+    text-transform: capitalize;
+    width: 85px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-accent);
+    z-index: 10;
+}
+
+.button-choose__item {
+    width: 100%;
+    text-align: start;
+    padding: 3px 5px;
+    
+}
+.button-choose__item:hover{
+    background-color: rgb(108, 99, 255,.2);
+    cursor: pointer;
+}
+
+.button-choose__img {
+    width: 6px;
+    
+}
+
+.main__button-theme {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: var(--input-height);
+}
+
+.list {
+    width: 520px;
+}
+
+.list__item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+}
+
+.list__item:not(:last-child) {
+    border-bottom: 1px solid var(--color-accent-rgb);
+}
+
+.list__item:hover {
+    cursor: pointer;
+}
+
+.list__wrapper-note {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.list__label {
+    font-size: 20px;
+}
+
+.list__input-text {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    font-family: "Kanit Medium";
+    color: var(--text-color);
+    width: 400px;
+}
+
+.list__input-text:focus {
+    outline: none;
+}
+
+
+.list__input-text:disabled {
+    color: var(--text-color);
+}
+
+.list__wrapper-change {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.list__wrapper-edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.list__checkbox {
+    position: relative;
+    appearance: none;
+    border: 1px solid var(--color-accent);
+    width: 26px;
+    height: 26px;
+}
+
+.list__checkbox::after {
+    content: "";
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    background: url('./icons/check.svg') no-repeat center ;    
+     
+}
+
+.list__checkbox:checked::after {
+    width: 26px;
+    height: 26px;
+    background-color: var(--color-accent);       
+}
+
+.list__icon {
+    transition: scale .3s;
+}
+
+.list__icon:hover {
+    scale: 1.2;
+}
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.empty__img {
+    width: 220px;
+}
+
+.empty__text {
+    font-family: "Kanit Regular";
+    font-size: 20px;
+}
+
+
+.footer {
+    flex-grow: 1;
+    position: relative;
+    width: 750px;
+    margin: 0 auto;
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer__button-undo {
+    display: flex;
+    /* justify-content: space-between; */
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 10px;
+    left: 30px;
+    width: 123px;
+    height: 38px;
+    font-family: "Kanit Regular";
+    text-transform: uppercase;
+    font-size: 16px;
+    background-color: var(--color-accent-dark);
+    border: 2px solid var(--color-accent);
+    
+}
+.footer__button-undo:hover {
+    background-color: var(--color-accent);
+    cursor: pointer;
+}
+
+.footer__button-undo-count{
+    width: 20px;
+}
+
+
+.footer__button-undo-img {
+    width: 15px;
+}
+
+.footer__button-undo-progress {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    
+    height: 3px;
+    background-color: var(--text-color);
+}
+
+.footer__button {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 5px 0px var(--color-accent);
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    
+    
+}
+.footer__button:hover {
+    background-color: var(--color-accent-dark);
+    border: 2px solid var(--color-accent);
+    cursor: pointer;
+}
+
+.wrapper-modal {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5% ;
+    background-color: rgb(37, 37, 37, .7);
+}
+
+.modal {
+    background-color: var(--background-color);
+    width: 500px;
+    height: 289px;
+    border: 1px solid var(--text-color);
+    border-radius: 16px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.modal__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    padding: 18px 30px;
+}
+
+.modal__header-text {
+    text-transform: uppercase;
+}
+
+.modal__header-input {
+    background-color: transparent;
+    border: 1px solid var(--text-color);
+    border-radius: var(--border-radius);
+    padding: 11px 16px;
+    width: 440px;
+    height: 38px;
+    color: var(--text-color);
+    font-family: "Inter medium";
+
+}
+
+.modal__header-input::placeholder {
+    font-family: "Inter medium";
+}
+
+.modal__header-input:focus {
+    outline-color: #666666;
+}
+
+.modal__button {
+    padding: 18px 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal__button-cancel {
+    width: 110px;
+    height: 38px;
+    background-color: transparent;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    font-family: 'Kanit Medium';
+    font-size: 18px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: scale .3s;
+}
+
+.modal__button-cancel:hover {        
+    background-color: var(--text-color);
+}
+
+
+.modal__button-apply {
+    width: 97px;
+    height: 38px;
+    background-color: var(--color-accent);
+    color: var(--text-color);
+    border: none;
+    font-family: 'Kanit Medium';
+    font-size: 18px;
+    text-transform: uppercase;
+
+}
+.modal__button-apply:hover {
+    background-color: var(--color-accent-dark);
+    border: 2px solid var(--color-accent);
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.line-through {
+    text-decoration: line-through;
+    opacity: .5;
+}
+
+/*убрать синий крестик при вводе в поле ввода*/
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+.save {
+    
+    width: 70px;
+    height: 38px;
+    text-transform: uppercase;
+    font-family: "Kanit Medium";
+    font-size: 18px;
+    border: 2px solid var(--color-accent);
+}
+
+.save:hover {
+    background-color: var(--color-accent-dark);
+    border: 2px solid var(--color-accent);
+    cursor: pointer;
+}
+
+.delete-btn {
+    width: 120px;
+    text-transform: uppercase;
+    font-family: "Kanit Medium";
+    font-size: 18px;
+    border: 2px solid var(--color-accent);
+    
+}
+
+.delete-btn:hover {
+    background-color: var(--color-accent-dark);
+    border: 2px solid var(--color-accent);
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        height: 89vh;
+    }
+    
+    .main {
+        width: 500px;
+    }
+
+    .main__input {
+        width: 100%;
+    }
+
+    .main__magnifier{
+        right: 10px;
+        top: 18px;
+    }
+
+    .main__wrapper {
+        justify-content: center;
+    }
+
+    .list{
+        width: 100%;
+    }
+
+    
+    .main__form {
+        flex-direction: column;
+        
+    }
+
+    .footer__button{
+        left: 80vw;
+        bottom: -10vh;
+        
+    }
+
+    .footer__button-undo {
+        bottom: -10vh;
+        right: 80vw;
+        
+    }
+
+
+}
+
+@media (max-width: 520px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .wrapper{
+        height: 80vh;
+    }
+    
+    .main {
+        width: 380px;
+
+        
+    }
+    .footer {
+        width: 380px;
+    }
+
+    .list__input-text {
+        font-size: 16px;
+        width: 290px;
+    }
+
+    .modal {
+        width: 360px;
+    }
+
+    .modal__header-input{
+        width: 300px;
+    }
+}

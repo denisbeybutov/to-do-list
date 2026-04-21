@@ -7,7 +7,71 @@
     <title>To do list</title>
 </head>
 <body>
-    <p>To do list</p>
+    <div class="wrapper">
+        <main class="main">
+            <h1 class="main__header">To do list</h1>
+            <div class="main__form">
+                <label for="main__search"></label>
+                <input class="main__input" type="search" id="main__search" placeholder="Search note...">
+                <img class="main__magnifier" src="./icons/magnifier.svg" alt="magnifier">
+                <div class="main__wrapper">
+                    <button class="delete-btn button">delete all</button>                    
+                    <button class="main__button-choose button">
+                        <p>All</p>
+                        <ul class="button-choose__list hidden">
+                            <li class="button-choose__item all">All</li>
+                            <li class="button-choose__item complete">Complete</li>
+                            <li class="button-choose__item incomplete">Incomplete</li>
+                        </ul>
+                        <img class="button-choose__img bottom" src="./icons/arrow-bottom.svg" alt="">
+                        <img class="button-choose__img top hidden" src="./icons/arrow-top.svg" alt="">
+                    </button>
+                    <button class="main__button-theme button">
+                        <img src="./icons/white-theme.svg" alt="white theme button">
+                    </button>
+                </div>
+            </div>
+            <ul class="list">
+
+
+                
+            </ul>
+            <div class="empty hidden">
+                <img src="./img/empty2.png" alt="" class="empty__img ">
+                <p class="empty__text">Empty...</p>
+            </div>
+            
+            
+        </main>
+        <footer class="footer">
+            <button class="footer__button-undo button hidden">
+                <p class="footer__button-undo-count">5</p>
+                <p>Undo</p>
+                <img class="footer__button-undo-img" src="./icons/undo.svg" alt="">
+                <div class="footer__button-undo-progress" style="width:100%"></div>
+            </button>
+            <button class="footer__button button">
+                <img src="./icons/footer-button.svg" alt="">
+            </button>
+        </footer>
+        
+    </div>
+
+    <div class="wrapper-modal hidden">
+        <div class="modal">
+            <div class="modal__header">
+                <h2 class="modal__header-text">New note</h2>
+                <input type="text" class="modal__header-input" placeholder="Input your note...">
+            </div>
+            <div class="modal__button">
+                <button class="modal__button-cancel">Cancel</button>
+                <button class="modal__button-apply">Apply</button>
+            </div>
+        </div>
+    </div>
+    
+
+
     <script src="./script.js"></script>
 </body>
 </html>
